@@ -10,26 +10,26 @@ dotenv.config();
 const app = express();
 
 /* =======================
-   CORS CONFIG (IMPORTANT)
+   CORS
 ======================= */
 const allowedOrigins = [
   "http://localhost:5173",
-  "https://portfolio-xi-swart-31.vercel.app"
+  "https://portfolio-xi-swart-31.vercel.app",
 ];
 
 app.use(
   cors({
     origin: (origin, callback) => {
-      // allow requests with no origin (Postman, curl, server-to-server)
+      // allow server-to-server, curl, Postman
       if (!origin) return callback(null, true);
 
       if (allowedOrigins.includes(origin)) {
         return callback(null, true);
       }
 
-      return callback(new Error("CORS not allowed"));
+      console.warn("Blocked by CORS:", origin);
+      return callback(null, false); // ⬅️ do NOT throw
     },
-    credentials: true,
   })
 );
 
@@ -38,7 +38,6 @@ app.use(express.json());
 /* =======================
    ROUTES
 ======================= */
-
 app.get("/", (req, res) => {
   res.send("Portfolio backend is running");
 });
@@ -59,7 +58,6 @@ app.get("/api/profile", async (req, res) => {
 /* =======================
    SERVER
 ======================= */
-
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`🚀 Server running on port ${PORT}`);

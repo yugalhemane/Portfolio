@@ -125,3 +125,19 @@
 .animate-fade-in-up {
   animation: fadeInUp 0.4s ease-out;
 }
+
+/* Image blend mask */
+.mask-gradient {
+  -webkit-mask-image: linear-gradient(
+    to top,
+    transparent 0%,
+    black 25%,
+    black 100%
+  );
+  mask-image: linear-gradient(
+    to top,
+    transparent 0%,
+    black 25%,
+    black 100%
+  );
+}
