@@ -8,6 +8,7 @@ import ProjectModal from "./components/ProjectModal";
 import ProjectFilters from "./components/ProjectFilters";
 import GithubStats from "./components/GithubStats";
 import Contact from "./components/Contact";
+import ScrollToTop from "./components/ScrollToTop";
 
 function App() {
   const [projects, setProjects] = useState([]);
@@ -19,7 +20,8 @@ function App() {
   useEffect(() => {
     async function loadProjects() {
       try {
-        const res = await fetch("http://localhost:5000/api/projects");
+        const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+        const res = await fetch(`${API_URL}/api/projects`);
         const data = await res.json();
         setProjects(data);
       } catch (err) {
@@ -58,15 +60,18 @@ function App() {
   });
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950">
+    <div className="min-h-screen bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 relative">
       <Navbar />
       <main className="max-w-5xl mx-auto px-4 pb-16">
         <Hero />
         <GithubStats projects={projects} loading={loading} />
-        <section id="projects" className="mt-10">
-          <h2 className="text-2xl md:text-3xl font-bold mb-4">
-            Featured Projects
-          </h2>
+        <section id="projects" className="mt-20 scroll-mt-20">
+          <div className="flex items-center gap-4 mb-6">
+            <h2 className="text-3xl md:text-4xl font-bold text-gradient">
+              Featured Projects
+            </h2>
+            <div className="flex-1 h-px bg-gradient-to-r from-cyan-400/50 to-transparent"></div>
+          </div>
 
           <ProjectFilters
             languages={languages}
@@ -83,14 +88,20 @@ function App() {
           />
         </section>
 
-        <section id="journey" className="mt-16">
-          <h2 className="text-2xl md:text-3xl font-bold mb-4">My Journey</h2>
+        <section id="journey" className="mt-24 scroll-mt-20">
+          <div className="flex items-center gap-4 mb-8">
+            <h2 className="text-3xl md:text-4xl font-bold text-gradient">My Journey</h2>
+            <div className="flex-1 h-px bg-gradient-to-r from-cyan-400/50 to-transparent"></div>
+          </div>
           <Timeline />
         </section>
         <Contact />
       </main>
 
       <ProjectModal project={selected} onClose={() => setSelected(null)} />
+      
+      {/* Scroll to top button */}
+      <ScrollToTop />
     </div>
   );
 }

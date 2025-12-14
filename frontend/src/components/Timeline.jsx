@@ -23,15 +23,28 @@ const events = [
 
 export default function Timeline() {
   return (
-    <ol className="relative border-l border-slate-700 ml-3 space-y-6">
-      {events.map((e) => (
-        <li key={e.year} className="ml-4">
-          <div className="absolute -left-[9px] w-4 h-4 rounded-full bg-cyan-500 border-2 border-slate-950" />
-          <time className="text-xs text-cyan-400">{e.year}</time>
-          <h3 className="text-sm font-semibold mt-1">{e.title}</h3>
-          <p className="text-xs text-slate-300">{e.detail}</p>
-        </li>
-      ))}
-    </ol>
+    <div className="relative">
+      <ol className="relative border-l-2 border-slate-800 ml-4 space-y-8">
+        {events.map((e, idx) => (
+          <li key={e.year} className="ml-6 relative group">
+            {/* Animated dot */}
+            <div className="absolute -left-[29px] top-0 w-5 h-5 rounded-full bg-gradient-to-br from-cyan-500 to-blue-500 border-4 border-slate-950 shadow-lg shadow-cyan-500/50 group-hover:scale-125 transition-transform duration-300" />
+            
+            {/* Content card */}
+            <div className="p-5 rounded-xl border border-slate-800/50 bg-slate-900/40 backdrop-blur-sm hover:border-cyan-400/30 hover:bg-slate-900/60 transition-all duration-300 group-hover:translate-x-2">
+              <time className="text-sm font-bold text-cyan-400 mb-2 block">
+                {e.year}
+              </time>
+              <h3 className="text-lg font-bold text-slate-100 mb-2 group-hover:text-cyan-300 transition-colors">
+                {e.title}
+              </h3>
+              <p className="text-sm text-slate-300 leading-relaxed">
+                {e.detail}
+              </p>
+            </div>
+          </li>
+        ))}
+      </ol>
+    </div>
   );
 }

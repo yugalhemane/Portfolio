@@ -1,1 +1,37 @@
-".env" 
+# Environment variables
+.env
+.env.local
+.env.*.local
+backend/.env
+backend/.env.local
+
+# Dependencies
+node_modules/
+**/node_modules/
+
+# Build outputs
+dist/
+build/
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+
+# IDE
+.vscode/
+.idea/
+*.sublime-*
+
+# Git mirror (if exists)
+portfolio-repo-mirror.git/
+
+# Vercel
+.vercel
+
+# Misc
+*.local
+.cache/
