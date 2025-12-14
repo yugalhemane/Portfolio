@@ -3,10 +3,7 @@ export default function GithubStats({ projects, loading }) {
   if (loading || !projects.length) return null;
 
   const totalRepos = projects.length;
-  const totalStars = projects.reduce(
-    (sum, p) => sum + (p.stars || 0),
-    0
-  );
+  const totalStars = projects.reduce((sum, p) => sum + (p.stars || 0), 0);
 
   const langCounts = {};
   projects.forEach((p) => {
@@ -14,15 +11,13 @@ export default function GithubStats({ projects, loading }) {
     langCounts[p.language] = (langCounts[p.language] || 0) + 1;
   });
 
-  const langEntries = Object.entries(langCounts).sort(
-    (a, b) => b[1] - a[1]
-  );
+  const langEntries = Object.entries(langCounts).sort((a, b) => b[1] - a[1]);
   const totalLangCount = langEntries.reduce((sum, [, c]) => sum + c, 0);
 
   return (
-    <section className="mt-16">
-      <div className="flex items-center gap-4 mb-4">
-        <h2 className="text-3xl md:text-4xl font-bold text-gradient">
+    <section className="mt-12 sm:mt-16">
+      <div className="flex items-center gap-4 mb-4 sm:mb-6">
+        <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gradient">
           GitHub Snapshot
         </h2>
         <div className="flex-1 h-px bg-gradient-to-r from-cyan-400/50 to-transparent"></div>
@@ -78,9 +73,9 @@ export default function GithubStats({ projects, loading }) {
                 <div className="h-2.5 rounded-full bg-slate-800/50 overflow-hidden relative">
                   <div
                     className="h-full bg-gradient-to-r from-cyan-500 to-blue-500 rounded-full transition-all duration-1000 ease-out group-hover:shadow-lg group-hover:shadow-cyan-500/50"
-                    style={{ 
+                    style={{
                       width: `${percent}%`,
-                      animationDelay: `${idx * 100}ms`
+                      animationDelay: `${idx * 100}ms`,
                     }}
                   />
                 </div>

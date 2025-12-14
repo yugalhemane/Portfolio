@@ -7,7 +7,7 @@ export default function Navbar() {
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 20);
-      
+
       // Update active section based on scroll position
       const sections = ["projects", "journey", "contact"];
       const current = sections.find((section) => {
@@ -39,14 +39,14 @@ export default function Navbar() {
           : "backdrop-blur-md bg-slate-950/40 border-b border-slate-800/30"
       }`}
     >
-      <nav className="max-w-5xl mx-auto px-4 py-4 flex items-center justify-between">
+      <nav className="max-w-6xl xl:max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 sm:py-4 flex items-center justify-between">
         <a
           href="#"
-          className="font-bold text-lg tracking-tight text-gradient hover:scale-105 transition-transform"
+          className="font-bold text-base sm:text-lg tracking-tight text-gradient hover:scale-105 transition-transform"
         >
           &lt;Yugal.dev /&gt;
         </a>
-        <div className="flex gap-6 text-sm items-center">
+        <div className="flex gap-3 sm:gap-6 text-xs sm:text-sm items-center">
           {navLinks.map((link) => (
             <a
               key={link.href}
