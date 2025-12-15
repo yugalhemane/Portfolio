@@ -7,22 +7,22 @@ const links = [
   },
   {
     label: "LinkedIn",
-    href: "https://www.linkedin.com/in/your-linkedin-id",
+    href: "https://www.linkedin.com/in/yugal-hemane/",
     icon: "💼",
   },
   {
     label: "X (Twitter)",
-    href: "https://x.com/your-handle",
+    href: "https://x.com/HemaneYugal",
     icon: "🕊️",
   },
   {
     label: "Instagram",
-    href: "https://instagram.com/your-handle",
+    href: "https://www.instagram.com/yugalhemane/",
     icon: "📸",
   },
   {
     label: "Email",
-    href: "mailto:yourmail@example.com",
+    href: "mailto:yugalhemane@gmail.com",
     icon: "✉️",
   },
 ];
