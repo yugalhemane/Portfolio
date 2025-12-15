@@ -55,6 +55,11 @@ app.get("/api/profile", async (req, res) => {
   }
 });
 
+app.get("/health", (req, res) => {
+  res.status(200).json({ status: "ok", uptime: process.uptime() });
+});
+
+
 /* =======================
    SERVER
 ======================= */

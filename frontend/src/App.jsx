@@ -17,21 +17,31 @@ function App() {
   const [searchTerm, setSearchTerm] = useState("");
   const [activeLanguage, setActiveLanguage] = useState("all");
 
-  useEffect(() => {
-    async function loadProjects() {
-      try {
-        const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
-        const res = await fetch(`${API_URL}/api/projects`);
-        const data = await res.json();
-        setProjects(data);
-      } catch (err) {
-        console.error("Failed to fetch projects", err);
-      } finally {
-        setLoading(false);
+useEffect(() => {
+  async function loadProjects() {
+    try {
+      const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
+      const res = await fetch(`${API_URL}/api/projects`);
+
+      if (!res.ok) {
+        throw new Error(`HTTP error ${res.status}`);
       }
+
+      const data = await res.json();
+
+      // 🛡️ SAFETY GUARD (important for Render cold starts)
+      setProjects(Array.isArray(data) ? data : []);
+    } catch (err) {
+      console.error("Failed to fetch projects", err);
+      setProjects([]); // never let it be non-array
+    } finally {
+      setLoading(false);
     }
-    loadProjects();
-  }, []);
+  }
+
+  loadProjects();
+}, []);
+
 
   
 
