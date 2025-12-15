@@ -20,19 +20,24 @@ const allowedOrigins = [
 app.use(
   cors({
     origin: (origin, callback) => {
-      // allow server-to-server, curl, Postman
+      // Allow server-to-server / health checks
       if (!origin) return callback(null, true);
 
+      // Allow exact matches
       if (allowedOrigins.includes(origin)) {
         return callback(null, true);
       }
 
+      // ✅ Allow ALL Vercel preview deployments
+      if (origin.endsWith(".vercel.app")) {
+        return callback(null, true);
+      }
+
       console.warn("Blocked by CORS:", origin);
-      return callback(null, false); // ⬅️ do NOT throw
+      return callback(null, false);
     },
   })
 );
-
 app.use(express.json());
 
 /* =======================
