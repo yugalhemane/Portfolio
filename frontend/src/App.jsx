@@ -33,6 +33,8 @@ function App() {
     loadProjects();
   }, []);
 
+  
+
   const languages = [
     "all",
     ...Array.from(

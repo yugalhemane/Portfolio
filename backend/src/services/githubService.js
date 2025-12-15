@@ -1,22 +1,27 @@
 import axios from "axios";
+import dotenv from "dotenv";
+
+dotenv.config();
+
 
 const GITHUB_USERNAME = process.env.GITHUB_USERNAME;
 const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
 
-if (!GITHUB_USERNAME) {
-  throw new Error("GITHUB_USERNAME is not defined");
+if (!GITHUB_USERNAME || !GITHUB_TOKEN) {
+  console.error("❌ Missing GitHub environment variables");
+  console.error("GITHUB_USERNAME:", GITHUB_USERNAME);
+  console.error("GITHUB_TOKEN:", GITHUB_TOKEN ? "SET" : "NOT SET");
+  process.exit(1);
 }
 
 const githubClient = axios.create({
   baseURL: "https://api.github.com",
   headers: {
-    "User-Agent": "portfolio-app",
-    ...(GITHUB_TOKEN && {
-      Authorization: `Bearer ${GITHUB_TOKEN}`,
-    }),
+    Authorization: `Bearer ${GITHUB_TOKEN}`,
     Accept: "application/vnd.github+json",
   },
 });
+
 
 /* =======================
    PROJECTS
