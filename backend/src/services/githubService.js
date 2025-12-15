@@ -42,6 +42,7 @@ export async function fetchProjects() {
     .map((repo) => ({
       id: repo.id,
       name: repo.name,
+      fullName: repo.full_name,
       description: repo.description,
       url: repo.html_url,
       homepage: repo.homepage,
