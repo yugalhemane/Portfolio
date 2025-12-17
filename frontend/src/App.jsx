@@ -3,12 +3,14 @@ import { useEffect, useState } from "react";
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
 import ProjectGrid from "./components/ProjectGrid";
+import CertificateGrid from "./components/CertificateGrid";
 import Timeline from "./components/Timeline";
 import ProjectModal from "./components/ProjectModal";
 import ProjectFilters from "./components/ProjectFilters";
 import GithubStats from "./components/GithubStats";
 import Contact from "./components/Contact";
 import ScrollToTop from "./components/ScrollToTop";
+import certificates from "./data/certificates";
 
 function App() {
   const [projects, setProjects] = useState([]);
@@ -17,33 +19,30 @@ function App() {
   const [searchTerm, setSearchTerm] = useState("");
   const [activeLanguage, setActiveLanguage] = useState("all");
 
-useEffect(() => {
-  async function loadProjects() {
-    try {
-      const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
-      const res = await fetch(`${API_URL}/api/projects`);
+  useEffect(() => {
+    async function loadProjects() {
+      try {
+        const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
+        const res = await fetch(`${API_URL}/api/projects`);
 
-      if (!res.ok) {
-        throw new Error(`HTTP error ${res.status}`);
+        if (!res.ok) {
+          throw new Error(`HTTP error ${res.status}`);
+        }
+
+        const data = await res.json();
+
+        // 🛡️ SAFETY GUARD (important for Render cold starts)
+        setProjects(Array.isArray(data) ? data : []);
+      } catch (err) {
+        console.error("Failed to fetch projects", err);
+        setProjects([]); // never let it be non-array
+      } finally {
+        setLoading(false);
       }
-
-      const data = await res.json();
-
-      // 🛡️ SAFETY GUARD (important for Render cold starts)
-      setProjects(Array.isArray(data) ? data : []);
-    } catch (err) {
-      console.error("Failed to fetch projects", err);
-      setProjects([]); // never let it be non-array
-    } finally {
-      setLoading(false);
     }
-  }
 
-  loadProjects();
-}, []);
-
-
-  
+    loadProjects();
+  }, []);
 
   const languages = [
     "all",
@@ -70,6 +69,26 @@ useEffect(() => {
     return matchesLanguage && matchesSearch;
   });
 
+  // Pagination state
+  const [projectsPage, setProjectsPage] = useState(1);
+  const [certsPage, setCertsPage] = useState(1);
+  const itemsPerPage = 6;
+
+  // Calculate paginated projects
+  const showAllProjects = activeLanguage === "all" && !searchTerm;
+  const paginatedProjects = filteredProjects.slice(
+    (projectsPage - 1) * itemsPerPage,
+    projectsPage * itemsPerPage
+  );
+  const projectsTotalPages = Math.ceil(filteredProjects.length / itemsPerPage);
+
+  // Calculate paginated certificates
+  const paginatedCerts = certificates.slice(
+    (certsPage - 1) * itemsPerPage,
+    certsPage * itemsPerPage
+  );
+  const certsTotalPages = Math.ceil(certificates.length / itemsPerPage);
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 relative">
       <Navbar />
@@ -93,9 +112,29 @@ useEffect(() => {
           />
 
           <ProjectGrid
-            projects={filteredProjects}
+            projects={paginatedProjects}
             loading={loading}
             onSelect={setSelected}
+            currentPage={projectsPage}
+            totalPages={projectsTotalPages}
+            onPageChange={setProjectsPage}
+          />
+        </section>
+
+        <section id="certificates" className="mt-20 sm:mt-24 scroll-mt-20">
+          <div className="flex items-center gap-4 mb-6 sm:mb-8">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gradient">
+              My Certificates
+            </h2>
+            <div className="flex-1 h-px bg-gradient-to-r from-cyan-400/50 to-transparent"></div>
+          </div>
+          <CertificateGrid
+            certificates={paginatedCerts}
+            loading={false}
+            onSelect={setSelected}
+            currentPage={certsPage}
+            totalPages={certsTotalPages}
+            onPageChange={setCertsPage}
           />
         </section>
 

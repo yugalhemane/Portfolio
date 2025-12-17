@@ -1,7 +1,15 @@
 // src/components/ProjectGrid.jsx
 import ProjectCard from "./ProjectCard";
+import Pagination from "./Pagination";
 
-export default function ProjectGrid({ projects, loading, onSelect }) {
+export default function ProjectGrid({
+  projects,
+  loading,
+  onSelect,
+  currentPage,
+  totalPages,
+  onPageChange,
+}) {
   if (loading) {
     return (
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -24,10 +32,22 @@ export default function ProjectGrid({ projects, loading, onSelect }) {
   }
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-5">
-      {projects.map((p) => (
-        <ProjectCard key={p.id} project={p} onClick={() => onSelect(p)} />
-      ))}
-    </div>
+    <>
+      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-5">
+        {projects.map((p) => (
+          <ProjectCard key={p.id} project={p} onClick={() => onSelect(p)} />
+        ))}
+      </div>
+
+      {totalPages > 1 && (
+        <div className="mt-8">
+          <Pagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            onPageChange={onPageChange}
+          />
+        </div>
+      )}
+    </>
   );
 }
