@@ -92,7 +92,7 @@ function App() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 relative">
       <Navbar />
-      <main className="max-w-6xl xl:max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
+      <main className="max-w-[130rem] mx-auto px-4 sm:px-6 lg:px-8 pb-16">
         <Hero />
         <GithubStats projects={projects} loading={loading} />
         <section id="projects" className="mt-16 sm:mt-20 scroll-mt-20">

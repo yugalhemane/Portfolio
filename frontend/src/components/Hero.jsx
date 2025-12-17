@@ -51,7 +51,7 @@ export default function Hero() {
         <div className="absolute top-1/3 right-0 w-[28rem] h-[28rem] bg-purple-500/20 blur-3xl rounded-full" />
       </div>
 
-      <div className="relative z-10 max-w-7xl mx-auto px-4">
+      <div className="relative z-10 w-full px-4 sm:px-6 lg:px-8 mx-auto xl:max-w-[130rem]">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-14 items-center">
           {/* ================= LEFT: TEXT ================= */}
           <div>
@@ -64,10 +64,9 @@ export default function Hero() {
               <span className="block">Hi, I’m</span>
               <span className="text-gradient">Yugal</span>
               <span className="block mt-3">
-                I build{" "}
-                <span className="text-gradient">secure</span>,{" "}
-                <span className="text-gradient">intelligent</span>{" "}
-                web experiences.
+                I build <span className="text-gradient">secure</span>,{" "}
+                <span className="text-gradient">intelligent</span> web
+                experiences.
               </span>
             </h1>
 
@@ -81,9 +80,7 @@ export default function Hero() {
 
             <p className="mt-6 text-slate-300 max-w-xl leading-relaxed">
               Passionate about{" "}
-              <span className="text-cyan-400 font-semibold">
-                cybersecurity
-              </span>{" "}
+              <span className="text-cyan-400 font-semibold">cybersecurity</span>{" "}
               and{" "}
               <span className="text-cyan-400 font-semibold">
                 developer tooling
@@ -126,7 +123,8 @@ export default function Hero() {
                       mask-gradient
                     "
                     onError={(e) => {
-                      e.currentTarget.src = "https://github.com/yugalhemane.png";
+                      e.currentTarget.src =
+                        "https://github.com/yugalhemane.png";
                     }}
                   />
 
@@ -136,7 +134,6 @@ export default function Hero() {
               </div>
             </div>
           </div>
-
         </div>
 
         {/* Scroll hint */}
