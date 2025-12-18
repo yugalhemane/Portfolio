@@ -22,8 +22,12 @@ export default function CertificateCard({ certificate }) {
             {certificate.issuer}
           </span>
           <span className="px-3 py-1 rounded-full bg-cyan-500/20 backdrop-blur-sm border border-cyan-400/60 text-cyan-100 font-medium shadow-lg group-hover:bg-cyan-500/30 group-hover:border-cyan-400 transition-all">
-            {certificate.date}
+            {certificate.badge1}
           </span>
+          <span className="px-3 py-1 rounded-full bg-purple-500/20 backdrop-blur-sm border border-purple-400/60 text-purple-100 font-medium shadow-lg group-hover:bg-purple-500/30 group-hover:border-purple-400 transition-all">
+            {certificate.badge2}
+          </span>
+          <span>{certificate.date}</span>
         </div>
       </div>
 
@@ -48,6 +52,24 @@ export default function CertificateCard({ certificate }) {
             </a>
           </div>
         </div>
+      </div>
+
+      {/* Badge images */}
+      <div className="p-5 pt-0 flex gap-3">
+        {certificate.badgeImage1 && (
+          <img
+            src={certificate.badgeImage1}
+            alt="Badge 1"
+            className="h-12 w-12 object-contain"
+          />
+        )}
+        {certificate.badgeImage2 && (
+          <img
+            src={certificate.badgeImage2}
+            alt="Badge 2"
+            className="h-12 w-12 object-contain"
+          />
+        )}
       </div>
     </div>
   );

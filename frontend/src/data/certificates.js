@@ -29,5 +29,6 @@ export default [
       "Certificate of Participation awarded to GHCI 25 Hackathon participants for their active involvement in 'Unbound with GenAI: Breaking Barriers, Creating Impact'.",
     imageUrl: "/certificates/GHCI 2025 .jpg",
     url: "/certificates/GHCI 2025 .jpg",
-  }
+  },
+  
 ];
