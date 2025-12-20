@@ -1,15 +1,22 @@
 // src/App.jsx
 import { useEffect, useState } from "react";
+import { motion } from "framer-motion";
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
+import TechStack from "./components/TechStack";
 import ProjectGrid from "./components/ProjectGrid";
 import CertificateGrid from "./components/CertificateGrid";
-import Timeline from "./components/Timeline";
+import AboutJourney from "./components/AboutJourney";
+import TechnicalInsights from "./components/TechnicalInsights";
 import ProjectModal from "./components/ProjectModal";
 import ProjectFilters from "./components/ProjectFilters";
 import GithubStats from "./components/GithubStats";
 import Contact from "./components/Contact";
+import Footer from "./components/Footer";
 import ScrollToTop from "./components/ScrollToTop";
+import ThemeControls from "./components/ThemeControls";
+import { useTheme } from "./contexts/ThemeContext";
+import { getAccentClasses } from "./utils/themeClasses";
 import certificates from "./data/certificates";
 
 function App() {
@@ -18,6 +25,8 @@ function App() {
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
   const [activeLanguage, setActiveLanguage] = useState("all");
+  const { theme, themeConfig, accentColor, accentConfig } = useTheme();
+  const accent = getAccentClasses(accentColor);
 
   useEffect(() => {
     async function loadProjects() {
@@ -90,70 +99,113 @@ function App() {
   const certsTotalPages = Math.ceil(certificates.length / itemsPerPage);
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 relative">
+    <div className={`min-h-screen bg-gradient-to-b ${themeConfig.bg} relative`}>
       <Navbar />
-      <main className="max-w-[130rem] mx-auto px-4 sm:px-6 lg:px-8 pb-16">
-        <Hero />
-        <GithubStats projects={projects} loading={loading} />
-        <section id="projects" className="mt-16 sm:mt-20 scroll-mt-20">
-          <div className="flex items-center gap-4 mb-6 sm:mb-8">
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gradient">
-              Featured Projects
-            </h2>
-            <div className="flex-1 h-px bg-gradient-to-r from-cyan-400/50 to-transparent"></div>
-          </div>
+      <Hero />
 
-          <ProjectFilters
-            languages={languages}
-            activeLanguage={activeLanguage}
-            onLanguageChange={setActiveLanguage}
-            searchTerm={searchTerm}
-            onSearchChange={setSearchTerm}
-          />
+      {/* Content Sections with Full Width Background, Padded Content */}
+      <div className="relative">
+        <main className="max-w-[130rem] mx-auto px-4 sm:px-6 lg:px-8 pb-16">
+          <TechStack />
+          <GithubStats projects={projects} loading={loading} />
 
-          <ProjectGrid
-            projects={paginatedProjects}
-            loading={loading}
-            onSelect={setSelected}
-            currentPage={projectsPage}
-            totalPages={projectsTotalPages}
-            onPageChange={setProjectsPage}
-          />
-        </section>
+          <motion.section
+            id="projects"
+            className="mt-16 sm:mt-20 scroll-mt-20"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 0.6 }}
+          >
+            <motion.div
+              className="flex items-center gap-4 mb-6 sm:mb-8"
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5 }}
+            >
+              <h2
+                className={`text-2xl sm:text-3xl md:text-4xl font-bold bg-gradient-to-r ${accentConfig.gradient} bg-clip-text text-transparent`}
+              >
+                Latest Works
+              </h2>
+              <div
+                className={`flex-1 h-px bg-gradient-to-r ${accent.divider} to-transparent`}
+              ></div>
+            </motion.div>
 
-        <section id="certificates" className="mt-20 sm:mt-24 scroll-mt-20">
-          <div className="flex items-center gap-4 mb-6 sm:mb-8">
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gradient">
-              My Certificates
-            </h2>
-            <div className="flex-1 h-px bg-gradient-to-r from-cyan-400/50 to-transparent"></div>
-          </div>
-          <CertificateGrid
-            certificates={paginatedCerts}
-            loading={false}
-            onSelect={setSelected}
-            currentPage={certsPage}
-            totalPages={certsTotalPages}
-            onPageChange={setCertsPage}
-          />
-        </section>
+            <ProjectFilters
+              languages={languages}
+              activeLanguage={activeLanguage}
+              onLanguageChange={setActiveLanguage}
+              searchTerm={searchTerm}
+              onSearchChange={setSearchTerm}
+            />
 
-        <section id="journey" className="mt-20 sm:mt-24 scroll-mt-20">
-          <div className="flex items-center gap-4 mb-6 sm:mb-8">
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gradient">
-              My Journey
-            </h2>
-            <div className="flex-1 h-px bg-gradient-to-r from-cyan-400/50 to-transparent"></div>
-          </div>
-          <Timeline />
-        </section>
-        <Contact />
-      </main>
+            <ProjectGrid
+              projects={paginatedProjects}
+              loading={loading}
+              onSelect={setSelected}
+              currentPage={projectsPage}
+              totalPages={projectsTotalPages}
+              onPageChange={setProjectsPage}
+            />
+          </motion.section>
+
+          <motion.section
+            id="certificates"
+            className="mt-20 sm:mt-24 scroll-mt-20"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 0.6 }}
+          >
+            <motion.div
+              className="flex items-center gap-4 mb-6 sm:mb-8"
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5 }}
+            >
+              <h2
+                className={`text-2xl sm:text-3xl md:text-4xl font-bold bg-gradient-to-r ${accentConfig.gradient} bg-clip-text text-transparent`}
+              >
+                My Certificates
+              </h2>
+              <div
+                className={`flex-1 h-px bg-gradient-to-r ${accent.divider} to-transparent`}
+              ></div>
+            </motion.div>
+            <CertificateGrid
+              certificates={paginatedCerts}
+              loading={false}
+              onSelect={setSelected}
+              currentPage={certsPage}
+              totalPages={certsTotalPages}
+              onPageChange={setCertsPage}
+            />
+          </motion.section>
+
+          <AboutJourney />
+        </main>
+
+        {/* Technical Insights and Contact have their own full-width backgrounds */}
+        <TechnicalInsights />
+
+        <div className="max-w-[130rem] mx-auto px-4 sm:px-6 lg:px-8">
+          <Contact />
+        </div>
+      </div>
+
+      <Footer />
 
       <ProjectModal project={selected} onClose={() => setSelected(null)} />
 
       {/* Scroll to top button */}
       <ScrollToTop />
+
+      {/* Theme Controls */}
+      <ThemeControls />
     </div>
   );
 }

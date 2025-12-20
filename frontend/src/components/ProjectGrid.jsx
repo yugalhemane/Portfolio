@@ -34,8 +34,8 @@ export default function ProjectGrid({
   return (
     <>
       <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-5">
-        {projects.map((p) => (
-          <ProjectCard key={p.id} project={p} onClick={() => onSelect(p)} />
+        {projects.map((p, index) => (
+          <ProjectCard key={p.id} project={p} onClick={() => onSelect(p)} index={index} />
         ))}
       </div>
 

@@ -11,7 +11,7 @@ export default function ProjectModal({ project, onClose }) {
       onClick={onClose}
     >
       <div 
-        className="max-w-2xl w-full rounded-2xl bg-slate-950/95 backdrop-blur-xl border border-slate-800/50 shadow-2xl p-6 md:p-8 relative max-h-[90vh] overflow-y-auto animate-fade-in-up"
+        className="max-w-4xl w-full mx-4 rounded-2xl bg-slate-950/95 backdrop-blur-xl border border-slate-800/50 shadow-2xl p-6 md:p-8 relative max-h-[95vh] overflow-y-auto animate-fade-in-up"
         onClick={(e) => e.stopPropagation()}
       >
         <button
