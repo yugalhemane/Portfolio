@@ -342,13 +342,22 @@ export default function Hero() {
               <div className="relative w-[280px] h-[320px] sm:w-[320px] sm:h-[360px] xl:w-[380px] xl:h-[420px] flex items-center justify-center">
                 {/* Profile Image - centered in big circle, perfectly circular, no border */}
                 <div
-                  className="relative w-[200px] h-[200px] sm:w-[240px] sm:h-[240px] xl:w-[280px] xl:h-[280px] rounded-full overflow-hidden"
-                  style={{ zIndex: 20 }}
+                  className="relative w-[200px] h-[200px] sm:w-[240px] sm:h-[240px] xl:w-[280px] xl:h-[280px] rounded-full overflow-hidden flex-shrink-0"
+                  style={{
+                    zIndex: 20,
+                    aspectRatio: "1 / 1",
+                    minWidth: "200px",
+                    minHeight: "200px",
+                  }}
                 >
                   <img
                     src="/profile.jpg"
                     alt="Yugal"
-                    className="w-full h-full object-cover object-center"
+                    className="w-full h-full object-cover rounded-full"
+                    style={{
+                      objectPosition: "center center",
+                      display: "block",
+                    }}
                     onError={(e) => {
                       e.currentTarget.src =
                         "https://github.com/yugalhemane.png";
