@@ -33,6 +33,32 @@
   .glow-cyan {
     box-shadow: 0 0 30px rgba(34, 211, 238, 0.5);
   }
+
+  .certificate-float {
+    animation: certificate-drift var(--float-duration, 7s) ease-in-out infinite;
+    animation-delay: var(--float-delay, 0s);
+    will-change: transform;
+  }
+
+  .certificate-float:hover {
+    animation-play-state: paused;
+  }
+}
+
+@keyframes certificate-drift {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(var(--float-offset, -14px));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .certificate-float {
+    animation: none;
+  }
 }
 
 /* Animated gradient background */

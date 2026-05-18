@@ -34,11 +34,12 @@ export default [
     id: 4,
     name: "CERTIFIED ETHICAL HACKER (CEH)",
     issuer: "EC-Council",
-    date: "2025-10-15",
+    date: "2026-02-23",
     description:
       "CERTIFIED ETHICAL HACKER (CEH) certification from EC-Council covering ethical hacking and security practices.",
     imageUrl: "/certificates/CEH Certificate.jpg",
     url: "/certificates/CEH Certificate.jpg",
+    badgeImage1: "/certificates/CEH_2E345519D3F7.png",
   },
   {
     id: 5,
@@ -47,8 +48,10 @@ export default [
     date: "2025-12-20",
     description:
       "Certificate of Participation awarded to GEN AI EXCHANGE 2025 Hackathon participants for their active involvement in 'Genbound: Unleashing the Power of GenAI'.",
-    imageUrl: "/certificates/GEN AI EXCHANGE 2025.jpg",
-    url: "/certificates/Hack2skill-Certificate.jpg",
+    imageUrl: "/certificates/Hack2skill-Certificate.png",
+    url: "/certificates/Hack2skill-Certificate.png",
+    badgeImage1: "/certificates/badgeImage1.jpg",
+    badgeImage2: "/certificates/badgeImage2.jpg",
   }
   
 ];

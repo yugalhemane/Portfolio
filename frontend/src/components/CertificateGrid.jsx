@@ -25,8 +25,8 @@ export default function CertificateGrid({ certificates, loading, currentPage, to
   return (
     <div className="space-y-6">
       <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-5">
-        {certificates.map((cert) => (
-          <CertificateCard key={cert.id} certificate={cert} />
+        {certificates.map((cert, index) => (
+          <CertificateCard key={cert.id} certificate={cert} index={index} />
         ))}
       </div>
       
