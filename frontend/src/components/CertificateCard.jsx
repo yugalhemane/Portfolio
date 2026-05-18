@@ -1,18 +1,8 @@
-export default function CertificateCard({ certificate, index = 0 }) {
-  const floatOffset = index % 2 === 0 ? "-14px" : "14px";
-  const floatDuration = `${7 + index * 0.8}s`;
-
+export default function CertificateCard({ certificate }) {
   return (
-    <div
-      className="certificate-float"
-      style={{
-        "--float-offset": floatOffset,
-        "--float-duration": floatDuration,
-        "--float-delay": `${index * -1.1}s`,
-      }}
-    >
+    <div className="h-full">
       <div
-        className="group w-full text-left rounded-2xl border border-slate-800/50 bg-slate-900/40 hover:bg-slate-900/80 hover:border-cyan-400/30 transition-all shadow-lg hover:shadow-2xl hover:shadow-cyan-500/20 p-0 overflow-hidden
+        className="group flex h-full w-full flex-col text-left rounded-2xl border border-slate-800/50 bg-slate-900/40 hover:bg-slate-900/80 hover:border-cyan-400/30 transition-all shadow-lg hover:shadow-2xl hover:shadow-cyan-500/20 p-0 overflow-hidden
                    transform-gpu hover:-translate-y-2 hover:scale-[1.02] duration-300 glass"
       >
         <div className="relative h-48 overflow-hidden bg-slate-800">
@@ -42,7 +32,7 @@ export default function CertificateCard({ certificate, index = 0 }) {
           </div>
         </div>
 
-        <div className="p-5">
+        <div className="flex-1 p-5">
           <h3 className="font-bold text-lg truncate group-hover:text-cyan-400 transition-colors mb-2">
             {certificate.name}
           </h3>

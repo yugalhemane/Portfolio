@@ -24,10 +24,21 @@ export default function CertificateGrid({ certificates, loading, currentPage, to
 
   return (
     <div className="space-y-6">
-      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-5">
-        {certificates.map((cert, index) => (
-          <CertificateCard key={cert.id} certificate={cert} index={index} />
-        ))}
+      <div className="certificate-marquee relative overflow-hidden py-3">
+        <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-16 bg-gradient-to-r from-slate-950 to-transparent" />
+        <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-16 bg-gradient-to-l from-slate-950 to-transparent" />
+
+        <div className="certificate-marquee-track flex w-max gap-4 sm:gap-5">
+          {[...certificates, ...certificates].map((cert, index) => (
+            <div
+              key={`${cert.id}-${index}`}
+              className="w-[18rem] shrink-0 sm:w-[21rem] lg:w-[23rem]"
+              aria-hidden={index >= certificates.length}
+            >
+              <CertificateCard certificate={cert} />
+            </div>
+          ))}
+        </div>
       </div>
       
       {/* Pagination controls */}

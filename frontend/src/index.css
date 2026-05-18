@@ -34,29 +34,27 @@
     box-shadow: 0 0 30px rgba(34, 211, 238, 0.5);
   }
 
-  .certificate-float {
-    animation: certificate-drift var(--float-duration, 7s) ease-in-out infinite;
-    animation-delay: var(--float-delay, 0s);
-    will-change: transform;
-  }
-
-  .certificate-float:hover {
+  .certificate-marquee:hover .certificate-marquee-track {
     animation-play-state: paused;
   }
 }
 
-@keyframes certificate-drift {
-  0%,
-  100% {
-    transform: translateY(0);
+.certificate-marquee-track {
+  animation: certificate-marquee 34s linear infinite;
+  will-change: transform;
+}
+
+@keyframes certificate-marquee {
+  from {
+    transform: translateX(0);
   }
-  50% {
-    transform: translateY(var(--float-offset, -14px));
+  to {
+    transform: translateX(-50%);
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .certificate-float {
+  .certificate-marquee-track {
     animation: none;
   }
 }
