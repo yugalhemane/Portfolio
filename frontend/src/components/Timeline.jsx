@@ -27,7 +27,7 @@ export default function Timeline() {
   return (
     <div className="relative max-w-4xl mx-auto">
       <ol className="relative border-l-2 border-slate-800 ml-4 sm:ml-6 space-y-6 sm:space-y-8">
-        {events.map((e, idx) => (
+        {events.map((e) => (
           <li key={e.year} className="ml-4 sm:ml-6 relative group">
             {/* Animated dot */}
             <div className="absolute -left-[21px] sm:-left-[29px] top-0 w-4 h-4 sm:w-5 sm:h-5 rounded-full bg-gradient-to-br from-cyan-500 to-blue-500 border-4 border-slate-950 shadow-lg shadow-cyan-500/50 group-hover:scale-125 transition-transform duration-300" />

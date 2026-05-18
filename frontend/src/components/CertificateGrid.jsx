@@ -1,7 +1,6 @@
-import React from 'react';
 import CertificateCard from './CertificateCard';
 
-export default function CertificateGrid({ certificates, loading, onSelect, currentPage, totalPages, onPageChange }) {
+export default function CertificateGrid({ certificates, loading, currentPage, totalPages, onPageChange }) {
   if (loading) {
     return (
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -27,7 +26,7 @@ export default function CertificateGrid({ certificates, loading, onSelect, curre
     <div className="space-y-6">
       <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-5">
         {certificates.map((cert) => (
-          <CertificateCard key={cert.id} certificate={cert} onClick={() => onSelect(cert)} />
+          <CertificateCard key={cert.id} certificate={cert} />
         ))}
       </div>
       

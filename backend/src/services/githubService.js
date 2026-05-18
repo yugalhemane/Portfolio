@@ -3,15 +3,18 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
-
 const GITHUB_USERNAME = process.env.GITHUB_USERNAME;
 const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
 
-if (!GITHUB_USERNAME || !GITHUB_TOKEN) {
-  console.error("❌ Missing GitHub environment variables");
-  console.error("GITHUB_USERNAME:", GITHUB_USERNAME);
-  console.error("GITHUB_TOKEN:", GITHUB_TOKEN ? "SET" : "NOT SET");
-  process.exit(1);
+function assertGitHubConfig() {
+  if (!GITHUB_USERNAME || !GITHUB_TOKEN) {
+    const missing = [
+      !GITHUB_USERNAME && "GITHUB_USERNAME",
+      !GITHUB_TOKEN && "GITHUB_TOKEN",
+    ].filter(Boolean);
+
+    throw new Error(`Missing GitHub environment variables: ${missing.join(", ")}`);
+  }
 }
 
 const githubClient = axios.create({
@@ -22,20 +25,15 @@ const githubClient = axios.create({
   },
 });
 
-
-/* =======================
-   PROJECTS
-======================= */
 export async function fetchProjects() {
-  const { data } = await githubClient.get(
-    `/users/${GITHUB_USERNAME}/repos`,
-    {
-      params: {
-        sort: "updated",
-        per_page: 50,
-      },
-    }
-  );
+  assertGitHubConfig();
+
+  const { data } = await githubClient.get(`/users/${GITHUB_USERNAME}/repos`, {
+    params: {
+      sort: "updated",
+      per_page: 50,
+    },
+  });
 
   return data
     .filter((repo) => !repo.fork)
@@ -54,13 +52,10 @@ export async function fetchProjects() {
     }));
 }
 
-/* =======================
-   PROFILE
-======================= */
 export async function fetchProfile() {
-  const { data } = await githubClient.get(
-    `/users/${GITHUB_USERNAME}`
-  );
+  assertGitHubConfig();
+
+  const { data } = await githubClient.get(`/users/${GITHUB_USERNAME}`);
 
   return {
     username: data.login,

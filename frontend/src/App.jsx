@@ -25,7 +25,7 @@ function App() {
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
   const [activeLanguage, setActiveLanguage] = useState("all");
-  const { theme, themeConfig, accentColor, accentConfig } = useTheme();
+  const { themeConfig, accentColor, accentConfig } = useTheme();
   const accent = getAccentClasses(accentColor);
 
   useEffect(() => {
@@ -84,7 +84,6 @@ function App() {
   const itemsPerPage = 6;
 
   // Calculate paginated projects
-  const showAllProjects = activeLanguage === "all" && !searchTerm;
   const paginatedProjects = filteredProjects.slice(
     (projectsPage - 1) * itemsPerPage,
     projectsPage * itemsPerPage
@@ -179,7 +178,6 @@ function App() {
             <CertificateGrid
               certificates={paginatedCerts}
               loading={false}
-              onSelect={setSelected}
               currentPage={certsPage}
               totalPages={certsTotalPages}
               onPageChange={setCertsPage}

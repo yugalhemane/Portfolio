@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef } from "react";
-import { motion, useMotionValue, useSpring } from "framer-motion";
+import { motion } from "framer-motion";
 import SocialLinks from "./SocialLinks";
 import { useTheme } from "../contexts/ThemeContext";
 import { getAccentClasses } from "../utils/themeClasses";
@@ -19,9 +19,6 @@ const roles = [
   "DevSecOps Engineer",
   "Problem Solver",
 ];
-
-// Manually changeable image
-const PROFILE_IMAGE = "/profile.jpg";
 
 // Tech icons for outer (big) orbit circle
 const outerOrbitIcons = [
@@ -94,8 +91,10 @@ export default function Hero() {
         45
       );
     } else {
-      setIsDeleting(false);
-      setCurrentRole((prev) => (prev + 1) % roles.length);
+      timeout = setTimeout(() => {
+        setIsDeleting(false);
+        setCurrentRole((prev) => (prev + 1) % roles.length);
+      }, 250);
     }
 
     return () => clearTimeout(timeout);
@@ -410,7 +409,7 @@ export default function Hero() {
                     ease: "linear",
                   }}
                 >
-                  {outerOrbitIcons.map((tech, index) => {
+                  {outerOrbitIcons.map((tech) => {
                     const IconComponent = tech.Icon;
                     const centerX = 50;
                     const centerY = 45; // Shifted up to position icons more upward
@@ -476,7 +475,7 @@ export default function Hero() {
                     ease: "linear",
                   }}
                 >
-                  {innerOrbitIcons.map((tech, index) => {
+                  {innerOrbitIcons.map((tech) => {
                     const IconComponent = tech.Icon;
                     const centerX = 50;
                     const centerY = 50;

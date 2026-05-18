@@ -1,5 +1,3 @@
-import React from "react";
-
 export default function CertificateCard({ certificate }) {
   return (
     <div
@@ -21,12 +19,16 @@ export default function CertificateCard({ certificate }) {
           <span className="px-3 py-1 rounded-full bg-slate-900/90 backdrop-blur-sm border border-slate-700/50 text-slate-100 font-medium shadow-lg group-hover:border-cyan-400/50 transition-colors">
             {certificate.issuer}
           </span>
-          <span className="px-3 py-1 rounded-full bg-cyan-500/20 backdrop-blur-sm border border-cyan-400/60 text-cyan-100 font-medium shadow-lg group-hover:bg-cyan-500/30 group-hover:border-cyan-400 transition-all">
-            {certificate.badge1}
-          </span>
-          <span className="px-3 py-1 rounded-full bg-purple-500/20 backdrop-blur-sm border border-purple-400/60 text-purple-100 font-medium shadow-lg group-hover:bg-purple-500/30 group-hover:border-purple-400 transition-all">
-            {certificate.badge2}
-          </span>
+          {certificate.badge1 && (
+            <span className="px-3 py-1 rounded-full bg-cyan-500/20 backdrop-blur-sm border border-cyan-400/60 text-cyan-100 font-medium shadow-lg group-hover:bg-cyan-500/30 group-hover:border-cyan-400 transition-all">
+              {certificate.badge1}
+            </span>
+          )}
+          {certificate.badge2 && (
+            <span className="px-3 py-1 rounded-full bg-purple-500/20 backdrop-blur-sm border border-purple-400/60 text-purple-100 font-medium shadow-lg group-hover:bg-purple-500/30 group-hover:border-purple-400 transition-all">
+              {certificate.badge2}
+            </span>
+          )}
           <span>{certificate.date}</span>
         </div>
       </div>

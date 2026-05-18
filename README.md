@@ -1,155 +1,134 @@
-# Portfolio Website
+# Yugal Hemane Portfolio
 
-A modern, professional portfolio website built with React and Node.js, featuring GitHub integration and beautiful UI animations.
+A modern portfolio website built with React, Vite, Tailwind CSS, Framer Motion, and an Express backend. It showcases GitHub projects, certificates, technical skills, experience, and contact options in a responsive single-page experience.
 
-## 🚀 Features
+## Features
 
-- **Modern UI**: Beautiful animations, glassmorphism effects, and gradient designs
-- **GitHub Integration**: Automatically fetches and displays your GitHub projects
-- **Responsive Design**: Works perfectly on all devices
-- **Project Showcase**: Detailed project modals with case studies
-- **Contact Form**: Easy way for visitors to reach out
-- **Timeline**: Visual journey of your career/education
+- Responsive React frontend with animated sections and project modals
+- GitHub-powered project listing with language filters and search
+- GitHub stats and language distribution summaries
+- Certificate gallery with linked certificate assets
+- Theme and accent color controls
+- Contact section with EmailJS support
+- Express backend for GitHub profile/project APIs
 
-## 📁 Project Structure
+## Project Structure
 
-```
+```text
 portfolio/
-├── frontend/          # React + Vite frontend
-│   ├── src/
-│   │   ├── components/
-│   │   ├── data/
-│   │   └── hooks/
-│   └── package.json
-├── backend/           # Express.js backend
-│   ├── src/
-│   │   ├── routes/
-│   │   ├── services/
-│   │   └── server.js
-│   └── package.json
-└── README.md
+|-- frontend/          # React + Vite frontend
+|   |-- public/        # Static assets, resume, certificates
+|   `-- src/
+|       |-- components/
+|       |-- contexts/
+|       |-- data/
+|       |-- hooks/
+|       `-- utils/
+|-- backend/           # Express API server
+|   `-- src/
+|       |-- routes/
+|       |-- services/
+|       `-- server.js
+`-- README.md
 ```
 
-## 🛠️ Setup
+## Prerequisites
 
-### Prerequisites
+- Node.js 18 or newer
+- npm
+- GitHub personal access token for GitHub API requests
+- EmailJS account if you want the contact form to send emails
 
-- Node.js (v18 or higher)
-- npm or yarn
-- GitHub Personal Access Token
+## Local Setup
 
-### Installation
+### Backend
 
-1. **Clone the repository**
-   ```bash
-   git clone <your-repo-url>
-   cd portfolio
-   ```
+```bash
+cd backend
+npm install
+```
 
-2. **Backend Setup**
-   ```bash
-   cd backend
-   npm install
-   ```
-   
-   Create a `.env` file in the `backend` directory:
-   ```env
-   PORT=5000
-   GITHUB_USERNAME=your-github-username
-   GITHUB_TOKEN=your-github-personal-access-token
-   ```
+Create `backend/.env`:
 
-3. **Frontend Setup**
-   ```bash
-   cd ../frontend
-   npm install
-   ```
+```env
+PORT=5000
+GITHUB_USERNAME=your-github-username
+GITHUB_TOKEN=your-github-personal-access-token
+```
 
-### Running Locally
+Run the backend:
 
-1. **Start Backend** (from `backend` directory)
-   ```bash
-   npm run dev
-   ```
-   Backend runs on `http://localhost:5000`
+```bash
+npm run dev
+```
 
-2. **Start Frontend** (from `frontend` directory)
-   ```bash
-   npm run dev
-   ```
-   Frontend runs on `http://localhost:5173`
+The backend runs at `http://localhost:5000`.
 
-## 🚀 Deployment
+### Frontend
+
+```bash
+cd frontend
+npm install
+```
+
+Optional frontend environment variables:
+
+```env
+VITE_API_URL=http://localhost:5000
+VITE_EMAILJS_SERVICE_ID=your_service_id
+VITE_EMAILJS_TEMPLATE_ID=your_template_id
+VITE_EMAILJS_PUBLIC_KEY=your_public_key
+```
+
+Run the frontend:
+
+```bash
+npm run dev
+```
+
+The frontend runs at `http://localhost:5173`.
+
+## Quality Checks
+
+From `frontend/`:
+
+```bash
+npm run lint
+npm run build
+```
+
+From `backend/`:
+
+```bash
+npm start
+```
+
+## Deployment
 
 ### Frontend on Vercel
 
-1. Push your code to GitHub
-2. Go to [Vercel](https://vercel.com)
-3. Import your repository
-4. Set root directory to `frontend`
-5. Build command: `npm run build`
-6. Output directory: `dist`
-7. Add environment variable for API URL:
-   - `VITE_API_URL` = your backend URL (e.g., `https://your-backend.onrender.com`)
+1. Import the repository in Vercel.
+2. Set the root directory to `frontend`.
+3. Use `npm run build` as the build command.
+4. Use `dist` as the output directory.
+5. Add `VITE_API_URL` with the deployed backend URL.
 
 ### Backend on Render
 
-1. Go to [Render](https://render.com)
-2. Create a new Web Service
-3. Connect your GitHub repository
-4. Settings:
-   - **Root Directory**: `backend`
-   - **Build Command**: `npm install`
-   - **Start Command**: `node src/server.js`
-   - **Environment**: Node
-5. Add environment variables:
-   - `GITHUB_USERNAME` = your GitHub username
-   - `GITHUB_TOKEN` = your GitHub personal access token
-   - `PORT` = 10000 (Render sets this automatically, but good to have)
-   - `NODE_ENV` = production
+1. Create a Render Web Service.
+2. Set the root directory to `backend`.
+3. Use `npm install` as the build command.
+4. Use `node src/server.js` as the start command.
+5. Add `GITHUB_USERNAME`, `GITHUB_TOKEN`, and `NODE_ENV=production`.
 
-### Update Frontend API URL
+## Customization
 
-After deploying backend, update the frontend API calls:
+- Case studies: `frontend/src/data/caseStudies.js`
+- Certificates: `frontend/src/data/certificates.js`
+- Social links: `frontend/src/components/SocialLinks.jsx`
+- Timeline and journey content: `frontend/src/components/AboutJourney.jsx`
+- Theme and accent options: `frontend/src/contexts/ThemeContext.jsx`
 
-1. Create `frontend/.env.production`:
-   ```env
-   VITE_API_URL=https://your-backend.onrender.com
-   ```
+## License
 
-2. Update `frontend/src/App.jsx` to use environment variable:
-   ```jsx
-   const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
-   ```
-
-## 🔐 Environment Variables
-
-### Backend (.env)
-- `PORT` - Server port (default: 5000)
-- `GITHUB_USERNAME` - Your GitHub username
-- `GITHUB_TOKEN` - GitHub Personal Access Token
-
-### Frontend (.env.production)
-- `VITE_API_URL` - Backend API URL
-
-## 📝 GitHub Token Setup
-
-1. Go to GitHub Settings → Developer settings → Personal access tokens → Tokens (classic)
-2. Generate new token with `public_repo` scope
-3. Copy the token and add it to your `.env` file
-
-## 🎨 Customization
-
-- **Case Studies**: Edit `frontend/src/data/caseStudies.js`
-- **Project Images**: Add images to `frontend/public/projects/`
-- **Social Links**: Update `frontend/src/components/SocialLinks.jsx`
-- **Timeline**: Edit `frontend/src/components/Timeline.jsx`
-
-## 📄 License
-
-MIT License - feel free to use this for your own portfolio!
-
-## 🤝 Contributing
-
-Feel free to fork and customize for your own use!
-
+MIT
