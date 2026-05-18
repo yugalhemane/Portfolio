@@ -75,10 +75,12 @@ Optional frontend environment variables:
 
 ```env
 VITE_API_URL=http://localhost:5000
-VITE_EMAILJS_SERVICE_ID=your_service_id
-VITE_EMAILJS_TEMPLATE_ID=your_template_id
-VITE_EMAILJS_PUBLIC_KEY=your_public_key
+VITE_EMAILJS_SERVICE_ID=your_emailjs_service_id
+VITE_EMAILJS_TEMPLATE_ID=your_emailjs_template_id
+VITE_EMAILJS_PUBLIC_KEY=your_emailjs_public_key
 ```
+
+For deployment, add the same `VITE_EMAILJS_*` values in Vercel under Project Settings -> Environment Variables, then redeploy the frontend. Vite bakes these values into the production build, so changing them requires a new deployment.
 
 Run the frontend:
 

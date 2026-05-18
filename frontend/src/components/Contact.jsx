@@ -4,17 +4,20 @@ import emailjs from "@emailjs/browser";
 import { useTheme } from "../contexts/ThemeContext";
 import { getAccentClasses } from "../utils/themeClasses";
 
+const EMAILJS_SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID;
+const EMAILJS_TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
+const EMAILJS_PUBLIC_KEY = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
+const CONTACT_EMAIL = "yugalhemane@gmail.com";
+
 export default function Contact() {
   const [form, setForm] = useState({ name: "", email: "", subject: "", message: "" });
   const [status, setStatus] = useState({ type: null, message: "" });
   const [loading, setLoading] = useState(false);
   const { accentColor, accentConfig } = useTheme();
   const accent = getAccentClasses(accentColor);
-
-  // EmailJS configuration - User needs to set these in their .env file
-  const SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID || "your_service_id";
-  const TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID || "your_template_id";
-  const PUBLIC_KEY = import.meta.env.VITE_EMAILJS_PUBLIC_KEY || "your_public_key";
+  const isEmailConfigured = Boolean(
+    EMAILJS_SERVICE_ID && EMAILJS_TEMPLATE_ID && EMAILJS_PUBLIC_KEY
+  );
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -36,21 +39,31 @@ export default function Contact() {
       });
     }
 
+    if (!isEmailConfigured) {
+      return setStatus({
+        type: "error",
+        message:
+          "The contact form is not configured yet. Please email me directly at yugalhemane@gmail.com.",
+      });
+    }
+
     setLoading(true);
     try {
-      // Initialize EmailJS (only needed once, but safe to call multiple times)
-      emailjs.init(PUBLIC_KEY);
+      emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY });
 
-      // Send email using EmailJS
       const templateParams = {
         from_name: form.name,
         from_email: form.email,
         subject: form.subject || "Contact from Portfolio",
         message: form.message,
-        to_name: "Yugal", // Your name
+        to_name: "Yugal",
       };
 
-      await emailjs.send(SERVICE_ID, TEMPLATE_ID, templateParams);
+      await emailjs.send(
+        EMAILJS_SERVICE_ID,
+        EMAILJS_TEMPLATE_ID,
+        templateParams
+      );
 
       setStatus({
         type: "success",
@@ -61,7 +74,8 @@ export default function Contact() {
       console.error("EmailJS error:", err);
       setStatus({
         type: "error",
-        message: err.text || "Failed to send message. Please try again later.",
+        message:
+          "Message could not be sent right now. Please email me directly at yugalhemane@gmail.com.",
       });
     } finally {
       setLoading(false);
@@ -126,10 +140,10 @@ export default function Contact() {
             <div className="pt-4 border-t border-slate-800/50">
               <p className="text-xs text-slate-400 mb-1">Email</p>
               <a
-                href="mailto:yugalhemane@gmail.com"
+                href={`mailto:${CONTACT_EMAIL}`}
                 className={`text-sm ${accent.text} ${accent.textHover} transition-colors`}
               >
-                yugalhemane@gmail.com
+                {CONTACT_EMAIL}
               </a>
             </div>
           </motion.div>
