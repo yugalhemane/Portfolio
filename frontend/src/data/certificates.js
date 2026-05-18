@@ -29,6 +29,26 @@ export default [
       "Certificate of Participation awarded to GHCI 25 Hackathon participants for their active involvement in 'Unbound with GenAI: Breaking Barriers, Creating Impact'.",
     imageUrl: "/certificates/GHCI 2025 .jpg",
     url: "/certificates/GHCI 2025 .jpg",
+  },    
+  {
+    id: 4,
+    name: "CERTIFIED ETHICAL HACKER (CEH)",
+    issuer: "EC-Council",
+    date: "2025-10-15",
+    description:
+      "CERTIFIED ETHICAL HACKER (CEH) certification from EC-Council covering ethical hacking and security practices.",
+    imageUrl: "/certificates/CEH Certificate.jpg",
+    url: "/certificates/CEH Certificate.jpg",
   },
+  {
+    id: 5,
+    name: "GEN AI EXCHANGE HACKATHON 2025",
+    issuer: "GEN AI EXCHANGE",
+    date: "2025-12-20",
+    description:
+      "Certificate of Participation awarded to GEN AI EXCHANGE 2025 Hackathon participants for their active involvement in 'Genbound: Unleashing the Power of GenAI'.",
+    imageUrl: "/certificates/GEN AI EXCHANGE 2025.jpg",
+    url: "/certificates/GHack2skill-Certificate.jpg",
+  }
   
 ];
