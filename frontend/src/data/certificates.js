@@ -48,7 +48,7 @@ export default [
     description:
       "Certificate of Participation awarded to GEN AI EXCHANGE 2025 Hackathon participants for their active involvement in 'Genbound: Unleashing the Power of GenAI'.",
     imageUrl: "/certificates/GEN AI EXCHANGE 2025.jpg",
-    url: "/certificates/GHack2skill-Certificate.jpg",
+    url: "/certificates/Hack2skill-Certificate.jpg",
   }
   
 ];
