@@ -10,7 +10,6 @@ import AboutJourney from "./components/AboutJourney";
 import TechnicalInsights from "./components/TechnicalInsights";
 import ProjectModal from "./components/ProjectModal";
 import ProjectFilters from "./components/ProjectFilters";
-import GithubStats from "./components/GithubStats";
 import Contact from "./components/Contact";
 import Footer from "./components/Footer";
 import ScrollToTop from "./components/ScrollToTop";
@@ -18,13 +17,13 @@ import ThemeControls from "./components/ThemeControls";
 import { useTheme } from "./contexts/ThemeContext";
 import { getAccentClasses } from "./utils/themeClasses";
 import certificates from "./data/certificates";
+import { featuredProjects } from "./data/featuredProjects";
 
 function App() {
   const [projects, setProjects] = useState([]);
   const [selected, setSelected] = useState(null);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
-  const [activeLanguage, setActiveLanguage] = useState("all");
   const { themeConfig, accentColor, accentConfig } = useTheme();
   const accent = getAccentClasses(accentColor);
 
@@ -53,29 +52,21 @@ function App() {
     loadProjects();
   }, []);
 
-  const languages = [
-    "all",
-    ...Array.from(
-      new Set(
-        projects
-          .map((p) => p.language)
-          .filter((lang) => lang && lang.trim().length > 0)
-      )
-    ),
-  ];
+  const fetchedProjectsByName = new Map(projects.map((project) => [project.name, project]));
+  const proofProjects = featuredProjects.map((project) => ({
+    ...fetchedProjectsByName.get(project.name),
+    ...project,
+  }));
 
-  const filteredProjects = projects.filter((p) => {
-    const matchesLanguage =
-      activeLanguage === "all" || (p.language && p.language === activeLanguage);
-
+  const filteredProjects = proofProjects.filter((p) => {
     const term = searchTerm.toLowerCase();
     const matchesSearch =
       !term ||
-      p.name.toLowerCase().includes(term) ||
-      (p.description || "").toLowerCase().includes(term) ||
-      (p.topics || []).some((t) => t.toLowerCase().includes(term));
+        p.name.toLowerCase().includes(term) ||
+        (p.description || "").toLowerCase().includes(term) ||
+        (p.topics || []).some((t) => t.toLowerCase().includes(term));
 
-    return matchesLanguage && matchesSearch;
+    return matchesSearch;
   });
 
   // Pagination state
@@ -106,7 +97,6 @@ function App() {
       <div className="relative">
         <main className="max-w-[130rem] mx-auto px-4 sm:px-6 lg:px-8 pb-16">
           <TechStack />
-          <GithubStats projects={projects} loading={loading} />
 
           <motion.section
             id="projects"
@@ -123,20 +113,27 @@ function App() {
               viewport={{ once: true }}
               transition={{ duration: 0.5 }}
             >
-              <h2
-                className={`text-2xl sm:text-3xl md:text-4xl font-bold bg-gradient-to-r ${accentConfig.gradient} bg-clip-text text-transparent`}
-              >
-                Latest Works
-              </h2>
+              <div>
+                <p className={`text-xs uppercase tracking-[0.3em] ${accent.text} mb-2`}>
+                  Selected proof of work
+                </p>
+                <h2
+                  className={`text-2xl sm:text-3xl md:text-4xl font-bold bg-gradient-to-r ${accentConfig.gradient} bg-clip-text text-transparent`}
+                >
+                  Projects That Solve Problems
+                </h2>
+              </div>
               <div
                 className={`flex-1 h-px bg-gradient-to-r ${accent.divider} to-transparent`}
               ></div>
             </motion.div>
+            <p className="max-w-3xl text-sm sm:text-base text-slate-300 leading-relaxed mb-8">
+              Each project below is presented as a problem, approach, and outcome
+              instead of a GitHub popularity contest. Open a card to see what it
+              does, why it exists, and how it was built.
+            </p>
 
             <ProjectFilters
-              languages={languages}
-              activeLanguage={activeLanguage}
-              onLanguageChange={setActiveLanguage}
               searchTerm={searchTerm}
               onSearchChange={setSearchTerm}
             />

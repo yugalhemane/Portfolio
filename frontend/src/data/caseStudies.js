@@ -1,71 +1,82 @@
 // src/data/caseStudies.js
 
-// Explicit, handcrafted case studies (for your key projects)
 const caseStudies = {
   "Pokedex-Lite": {
-    role: "Fullstack Developer",
+    role: "Frontend Developer",
+    type: "Product Experience",
     problem:
-      "Develop a fast, clean way to explore Pokémon data using a modern frontend stack instead of heavy, slow fan sites.",
+      "People need a faster, cleaner way to explore Pokemon data without digging through heavy fan sites or confusing layouts.",
     solution:
-      "Built a React-based UI with search, filtering, and lazy loading of data. Optimized rendering and API calls to feel snappy even on slower devices.",
+      "Built a focused React interface with search, filtering, and responsive cards so users can discover Pokemon details quickly.",
+    outcome:
+      "Turned a public API into a polished browsing experience with clear data presentation and smooth UI flow.",
     challenges:
-      "Handling API rate limits, keeping the UI responsive while fetching large datasets, and designing a component structure that stays easy to extend.",
+      "Keeping API calls efficient, handling loading/error states, and making the interface feel fast on smaller screens.",
     learnings:
-      "Deepened understanding of state management, API error handling, and performance patterns in React.",
+      "Improved React state handling, API integration, component structure, and performance-minded UI decisions.",
   },
   CyberNinja: {
-    role: "Game & Backend Designer",
+    role: "Fullstack Developer",
+    type: "Security Learning Tool",
     problem:
-      "Create a fun, beginner-friendly way to learn cybersecurity concepts through interactive terminal-style missions.",
+      "Cybersecurity beginners often learn theory but do not get a guided, interactive way to practice real concepts.",
     solution:
-      "Designed a mission-based flow where users complete realistic security scenarios in a simulated terminal, backed by APIs that track progress.",
+      "Designed a mission-based terminal-style experience where users complete security scenarios and progress through challenges.",
+    outcome:
+      "Created a learning flow that makes cybersecurity practice feel more engaging, structured, and beginner-friendly.",
     challenges:
-      "Balancing realism with simplicity, designing branching scenarios, and structuring the backend to support new missions without rewrites.",
+      "Balancing realism with simplicity, designing scenario progression, and structuring APIs for future missions.",
     learnings:
-      "Improved at API design, user onboarding patterns, and turning complex security ideas into simple, guided steps.",
+      "Improved API design, interactive UX planning, and the ability to explain complex security ideas through product design.",
   },
-  // Add more repos with exact repo names as keys if you want custom text
+  portfolio: {
+    role: "Fullstack Developer",
+    type: "Personal Brand System",
+    problem:
+      "A developer portfolio must communicate capability quickly without relying only on GitHub stats or raw repository lists.",
+    solution:
+      "Built a full portfolio system with project case studies, certificates, contact flow, theme controls, and GitHub-backed project loading.",
+    outcome:
+      "Created a recruiter-facing experience that turns projects, skills, and learning history into a cohesive professional story.",
+    challenges:
+      "Balancing visual polish, responsive behavior, real data, and a clear narrative that does not overexplain.",
+    learnings:
+      "Strengthened frontend architecture, design iteration, deployment workflow, and presentation strategy.",
+  },
 };
 
-// Fallback: generate a decent “case study” for ANY repo
+function humanizeName(name = "Project") {
+  return name.replace(/[-_]/g, " ").replace(/\b\w/g, (char) => char.toUpperCase());
+}
+
 function buildFallbackStudy(project) {
   const name = project.name || "This project";
-  const language = project.language || "a mixed stack";
+  const readableName = humanizeName(name);
   const description =
     project.description ||
-    "A practical experiment to explore ideas and improve my engineering skills.";
+    "A practical build focused on turning an idea into a usable software experience.";
 
   return {
     role: "Fullstack Developer",
-    problem: `Build a real-world project (${name}) to practice ${language} and modern development workflows.`,
-    solution: `Implemented ${name} using ${language}, focusing on clean structure, readable code, and a user-friendly interface. The project is integrated with GitHub and kept up to date through active iteration.`,
+    type: "Applied Build",
+    problem: `Build ${readableName} as a practical solution around a real product idea, not just a code experiment.`,
+    solution: `Structured the project around usable features, clean UI flow, and maintainable implementation so the work can be understood quickly by visitors.`,
+    outcome:
+      "Demonstrates the ability to plan, build, present, and iterate on a complete software idea.",
     challenges:
-      "Balancing new technology learning with writing maintainable code, structuring the project to stay extendable, and handling edge cases discovered during testing.",
+      "Clarifying scope, keeping the interface understandable, and making the implementation easy to extend.",
     learnings:
-      "Improved my understanding of project structure, version control workflows, and how to turn an idea into a usable product that I can iterate on over time.",
+      "Improved product thinking, project structure, version control workflow, and practical delivery habits.",
     description,
   };
 }
 
-// Explicit project types for highlighted repos
 const explicitProjectTypes = {
-  "Pokedex-Lite": "Featured",
-  CyberNinja: "Tool",
-  // Add more if you like: "portfolio": "Featured", etc.
+  "Pokedex-Lite": "Case Study",
+  CyberNinja: "Security Tool",
+  portfolio: "Portfolio System",
 };
 
-// Fallback project type based on stars & forks
-function inferProjectType(project) {
-  const stars = project.stars || 0;
-  const forks = project.forks || 0;
-
-  if (stars >= 10 || forks >= 2) return "Featured";
-  if (forks > 0) return "Library";
-  if (stars === 0 && forks === 0) return "Experiment";
-  return "Project";
-}
-
-// Public API used by components
 export function getCaseStudy(project) {
   if (!project) return null;
 
@@ -77,10 +88,12 @@ export function getCaseStudy(project) {
 
 export function getProjectType(project) {
   if (!project) return "Project";
-  if (explicitProjectTypes[project.name])
+  if (explicitProjectTypes[project.name]) {
     return explicitProjectTypes[project.name];
-  if (explicitProjectTypes[project.fullName])
+  }
+  if (explicitProjectTypes[project.fullName]) {
     return explicitProjectTypes[project.fullName];
+  }
 
-  return inferProjectType(project);
+  return getCaseStudy(project)?.type || "Project";
 }

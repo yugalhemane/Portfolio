@@ -33,9 +33,9 @@ const outerOrbitIcons = [
 // Tech icons for inner (small) orbit circle
 const innerOrbitIcons = [
   { name: "JavaScript", Icon: JavaScriptIcon, angle: 45 },
-  { name: "TypeScript", icon: "📘", angle: 135 },
-  { name: "Go", icon: "🐹", angle: 225 },
-  { name: "Python", icon: "🐍", angle: 315 },
+  { name: "TypeScript", icon: "TS", angle: 135 },
+  { name: "Go", icon: "Go", angle: 225 },
+  { name: "Python", icon: "Py", angle: 315 },
 ];
 
 export default function Hero() {
@@ -282,7 +282,7 @@ export default function Hero() {
               <span className={`${accent.text} font-semibold`}>
                 developer tooling
               </span>
-              . I turn ideas into real products — from security tools to
+              . I turn ideas into real products - from security tools to
               full-stack platforms.
             </motion.p>
 
@@ -326,7 +326,7 @@ export default function Hero() {
             </motion.div>
           </motion.div>
 
-          {/* ================= RIGHT: PROFILE WITH ORBITING ICONS ================= */}
+          {/* ================= RIGHT: DEVELOPER COMMAND CENTER ================= */}
           <motion.div
             className="flex justify-center lg:justify-end"
             variants={itemVariants}
@@ -337,31 +337,40 @@ export default function Hero() {
                 className={`absolute -inset-6 rounded-full bg-gradient-to-br ${accentConfig.gradient} blur-2xl opacity-50`}
               />
 
-              {/* Profile Container with Two Orbiting Icon Circles */}
-              <div className="relative w-[280px] h-[320px] sm:w-[320px] sm:h-[360px] xl:w-[380px] xl:h-[420px] flex items-center justify-center">
-                {/* Profile Image - centered in big circle, perfectly circular, no border */}
-                <div
-                  className="relative w-[200px] h-[200px] sm:w-[240px] sm:h-[240px] xl:w-[280px] xl:h-[280px] rounded-full overflow-hidden flex-shrink-0"
-                  style={{
-                    zIndex: 20,
-                    aspectRatio: "1 / 1",
-                    minWidth: "200px",
-                    minHeight: "200px",
-                  }}
-                >
-                  <img
-                    src="/profile.jpg"
-                    alt="Yugal"
-                    className="w-full h-full object-cover rounded-full"
-                    style={{
-                      objectPosition: "center center",
-                      display: "block",
-                    }}
-                    onError={(e) => {
-                      e.currentTarget.src =
-                        "https://github.com/yugalhemane.png";
-                    }}
-                  />
+              {/* Developer visual with synchronized orbit rings */}
+              <div className="relative flex aspect-square w-[300px] items-center justify-center sm:w-[360px] xl:w-[430px]">
+                <div className="relative z-20 w-[210px] rounded-3xl border border-white/10 bg-slate-950/85 p-4 shadow-2xl shadow-cyan-500/20 backdrop-blur-md sm:w-[250px] xl:w-[290px]">
+                  <div className="mb-4 flex items-center justify-between">
+                    <div className="flex gap-1.5">
+                      <span className="h-2.5 w-2.5 rounded-full bg-red-400" />
+                      <span className="h-2.5 w-2.5 rounded-full bg-amber-400" />
+                      <span className="h-2.5 w-2.5 rounded-full bg-emerald-400" />
+                    </div>
+                    <span className={`text-[10px] uppercase tracking-[0.25em] ${accent.text}`}>
+                      Fullstack
+                    </span>
+                  </div>
+                  <div className="space-y-3 font-mono text-xs">
+                    <div className="rounded-xl border border-slate-800 bg-slate-900/70 p-3">
+                      <p className="text-slate-500">build target</p>
+                      <p className="mt-1 text-slate-100">
+                        secure_web_experience()
+                      </p>
+                    </div>
+                    <div className="grid grid-cols-2 gap-2">
+                      <div className="rounded-lg bg-cyan-500/10 p-3">
+                        <p className="text-slate-500">Frontend</p>
+                        <p className="mt-1 font-semibold text-cyan-200">React</p>
+                      </div>
+                      <div className="rounded-lg bg-emerald-500/10 p-3">
+                        <p className="text-slate-500">Backend</p>
+                        <p className="mt-1 font-semibold text-emerald-200">Node</p>
+                      </div>
+                    </div>
+                    <div className="rounded-xl border border-cyan-400/20 bg-cyan-500/10 p-3">
+                      <p className="text-cyan-200">Problem to Product to Delivery</p>
+                    </div>
+                  </div>
                 </div>
 
                 {/* Outer (Big) Dashed Orbit Circle */}
@@ -412,8 +421,8 @@ export default function Hero() {
                   {outerOrbitIcons.map((tech) => {
                     const IconComponent = tech.Icon;
                     const centerX = 50;
-                    const centerY = 45; // Shifted up to position icons more upward
-                    const radius = 42; // Big circle
+                    const centerY = 50;
+                    const radius = 42;
                     const angle = (tech.angle * Math.PI) / 180;
                     const x = centerX + Math.cos(angle) * radius;
                     const y = centerY + Math.sin(angle) * radius;
