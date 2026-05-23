@@ -24,6 +24,8 @@ function App() {
   const [selected, setSelected] = useState(null);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
+  const [projectType, setProjectType] = useState("all"); // 'all' or 'featured'
+  const [selectedLanguage, setSelectedLanguage] = useState("All");
   const { themeConfig, accentColor, accentConfig } = useTheme();
   const accent = getAccentClasses(accentColor);
 
@@ -52,27 +54,71 @@ function App() {
     loadProjects();
   }, []);
 
-  const fetchedProjectsByName = new Map(projects.map((project) => [project.name, project]));
-  const proofProjects = featuredProjects.map((project) => ({
-    ...fetchedProjectsByName.get(project.name),
+  const featuredNames = new Set(featuredProjects.map(p => p.name.toLowerCase()));
+  const fetchedProjectsByName = new Map(
+    projects.map((project) => [project.name.toLowerCase(), project])
+  );
+  
+  // 1. Merge featured projects with live stats if available (case-insensitive)
+  const featuredProof = featuredProjects.map((project) => ({
+    ...fetchedProjectsByName.get(project.name.toLowerCase()),
     ...project,
+    isFeatured: true,
   }));
 
+  // 2. Map other public repos that are NOT featured (case-insensitive)
+  const nonFeaturedProof = projects
+    .filter((repo) => !featuredNames.has(repo.name.toLowerCase()))
+    .map((repo) => ({
+      ...repo,
+      isFeatured: false,
+      id: repo.id || `repo-${repo.name}`,
+    }));
+
+  // 3. Combine both lists (featured first, followed by others)
+  const proofProjects = [...featuredProof, ...nonFeaturedProof];
+
+  // Extract unique primary languages dynamically from public repos
+  const availableLanguages = [
+    "All",
+    ...new Set(
+      proofProjects
+        .map((p) => p.language)
+        .filter(Boolean)
+    ),
+  ];
+
+  // Filtering Logic
   const filteredProjects = proofProjects.filter((p) => {
+    // 1. Search term filter
     const term = searchTerm.toLowerCase();
     const matchesSearch =
       !term ||
-        p.name.toLowerCase().includes(term) ||
-        (p.description || "").toLowerCase().includes(term) ||
-        (p.topics || []).some((t) => t.toLowerCase().includes(term));
+      p.name.toLowerCase().includes(term) ||
+      (p.description || "").toLowerCase().includes(term) ||
+      (p.topics || []).some((t) => t.toLowerCase().includes(term));
 
-    return matchesSearch;
+    // 2. Project type filter ('featured' vs 'all')
+    const matchesType = projectType === "all" || p.isFeatured;
+
+    // 3. Language filter
+    const matchesLanguage =
+      selectedLanguage === "All" ||
+      p.language === selectedLanguage ||
+      (p.topics || []).some((t) => t.toLowerCase() === selectedLanguage.toLowerCase());
+
+    return matchesSearch && matchesType && matchesLanguage;
   });
 
   // Pagination state
   const [projectsPage, setProjectsPage] = useState(1);
   const [certsPage, setCertsPage] = useState(1);
   const itemsPerPage = 6;
+
+  // Reset page number on filter changes
+  useEffect(() => {
+    setProjectsPage(1);
+  }, [searchTerm, projectType, selectedLanguage]);
 
   // Calculate paginated projects
   const paginatedProjects = filteredProjects.slice(
@@ -136,6 +182,11 @@ function App() {
             <ProjectFilters
               searchTerm={searchTerm}
               onSearchChange={setSearchTerm}
+              projectType={projectType}
+              onProjectTypeChange={setProjectType}
+              selectedLanguage={selectedLanguage}
+              onLanguageChange={setSelectedLanguage}
+              availableLanguages={availableLanguages}
             />
 
             <ProjectGrid

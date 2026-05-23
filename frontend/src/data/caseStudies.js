@@ -83,6 +83,12 @@ export function getCaseStudy(project) {
   if (caseStudies[project.name]) return caseStudies[project.name];
   if (caseStudies[project.fullName]) return caseStudies[project.fullName];
 
+  const nameLower = project.name?.toLowerCase();
+  const fullNameLower = project.fullName?.toLowerCase();
+
+  if (caseStudies[nameLower]) return caseStudies[nameLower];
+  if (caseStudies[fullNameLower]) return caseStudies[fullNameLower];
+
   return buildFallbackStudy(project);
 }
 
@@ -93,6 +99,16 @@ export function getProjectType(project) {
   }
   if (explicitProjectTypes[project.fullName]) {
     return explicitProjectTypes[project.fullName];
+  }
+
+  const nameLower = project.name?.toLowerCase();
+  const fullNameLower = project.fullName?.toLowerCase();
+
+  if (explicitProjectTypes[nameLower]) {
+    return explicitProjectTypes[nameLower];
+  }
+  if (explicitProjectTypes[fullNameLower]) {
+    return explicitProjectTypes[fullNameLower];
   }
 
   return getCaseStudy(project)?.type || "Project";
